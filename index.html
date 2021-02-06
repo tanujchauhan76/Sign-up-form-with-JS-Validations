@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign up form</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<form autocomplete="off">
+		<h2>Sign Up</h2>
+		<hr>
+		<div>
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" autocomplete="off">
+			<span class="error">Must be more 3 characters!</span>
+		</div>
+		<div>
+			<label for="age">Age</label>
+			<input type="text" name="age" id="age">
+			<span class="error"></span>
+		</div>
+		<div>
+			<label for="gender">Gender</label>
+			<label><input type="radio" name="gender" value="Male">Male</label>
+			<label><input type="radio" name="gender" value="Female">Female</label>
+			<br>
+			<span class="error">Please select a Gender!</span>
+		</div>
+		<div>
+			<label for="location">Location</label>
+			<select name="location" id="location">
+				<option value="">Select Location</option>
+				<option value="Montreal">Montreal</option>
+				<option value="Ottawa">Ottawa</option>
+				<option value="Québec">Québec</option>
+			</select>
+			<span class="error">Please select a location!</span>
+		</div>
+		<hr>
+		<input type="submit" name="submit" value="Submit"><br>
+		<input type="reset" value="Reset">
+	</form>
+
+	<script>
+		var errorColor = "#F44336";
+		var validColor = "green";
+
+		$(function(){
+			//globalizing the fields for better manipulation
+			var name = $("input[name='name']"),
+			age = $("input[name='age']"),
+			location = $("select[name='location']"),
+			gender = $("input[name='gender']")
+
+			//validate name field on the go
+			name.on({
+				focus: function(){
+					$(this).css("border-color", "orange");
+				},
+				blur: function(){
+					validateName($(this));
+				},
+				keyup: function(){
+					validateName($(this));
+				}
+			});
+
+			//when the form submits
+			$("form").submit(function(){
+				resetFrom(); //reset the form in order to revalidate
+
+				var validated = true,
+				formValue = "";
+
+				//validate name field inside the form
+				validated = validateName(name);
+				
+				if(age.val() == ""){
+					age.css("border-color", errorColor);
+					age.next().text("Age cannot be empty!");
+					age.next().show("slow");
+					validated = false;
+				}else if(isNaN(age.val())){
+					age.css("border-color", errorColor);
+					age.next().text("Age should be a number!");
+					age.next().show("slow");
+					validated = false;
+				}else if(parseInt(age.val()) < 18){
+					age.css("border-color", errorColor);
+					age.next().text("Age should be 18 and above!");
+					age.next().show("slow");
+					validated = false;
+				}
+
+				if(!gender.is(":checked")){
+					gender.parent().css("color", errorColor);
+					gender.parents("div").find(".error").show("slow");
+					validated = false;
+				}
+
+				if(location.val() == ""){
+					location.css("border-color", errorColor);
+					location.next().show("slow");
+					validated = false;
+				}
+
+				if(validated){
+					formValue += "Name: " + name.val() + "\n";
+					formValue += "Age: " + age.val() + "\n";
+					formValue += "Gender: " + gender.filter(":checked").val() + "\n";
+					formValue += "Location: " + location.val() + "\n";
+
+					validated = confirm("Are you sure you want to submit this form?\n" + formValue);
+				}
+
+				return validated;
+			});
+
+			//when the form reset is triggerred, call my reset function as well
+			$("input[type='reset']").click(function(){
+				resetFrom()
+			});
+
+		});
+
+		//function to validate the name field
+		function validateName(el){
+			var valid = true;
+
+			if(el.val().length < 4){
+				el.css("border-color", errorColor);
+				el.next().show("slow");
+				valid = false;
+			}else{
+				el.css("border-color", validColor);
+				el.next().hide("slow");
+			}
+
+			return valid;
+		}
+
+		//function to rest the form
+		function resetFrom(){
+			$(".error").hide();
+			$("form input, form select").css("border-color", "gray");
+			$("label").css("color", "black");
+		}
+	</script>
+</body>
+</html>

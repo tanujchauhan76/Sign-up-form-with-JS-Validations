@@ -1,0 +1,88 @@
+html,body{
+	padding: 0;
+	margin: 0;
+}
+
+form{
+	width: 500px;
+	margin: 50px auto 0;
+	border: 1px solid #ddd;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 5px #bcbcbc;
+}
+
+form div{
+	display: inline-block;
+	width: 47%;
+	margin-right: 13px;
+	vertical-align: top;
+}
+
+form h2{
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	font-size: 25px;
+}
+
+form label[for]{
+	display: block;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+form input[type="text"], form input[type="submit"],form input[type="reset"] {
+	height: 20px;
+	width: 100%;
+	border: 1px solid gray;
+	border-radius: 3px;
+	outline: none;
+}
+
+form select{
+	width: 104%;
+	height: 25px;
+	border: 1px solid gray;
+	border-radius: 3px;
+}
+
+form input[type="submit"]{
+	background-color: #009688;
+	height: 35px;
+	color: white;
+	font-size: 20px;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 0px 0px 2px #bcbcbc;
+}
+
+form input[type="reset"]{
+	background-color: orange;
+	height: 35px;
+	color: white;
+	font-size: 20px;
+	border-radius: 5px;
+	border: none;
+        margin-top: 7px;
+	box-shadow: 0px 0px 2px #bcbcbc;
+}
+
+form input[type="submit"]:hover{
+	background-color: #03a9f4;
+}
+form input[type="reset"]:hover{
+	background-color: #de930b;
+}
+form input[type="checkbox"]{
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	-o-appearance:none;
+}
+
+form .error {
+	font-size: 14px;
+	font-style: italic;
+	color: #F44336;
+	display: none;
+}
